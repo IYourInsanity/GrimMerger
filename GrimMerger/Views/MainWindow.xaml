@@ -100,10 +100,15 @@
                 </ListBox>
 
 
-                <ListBox Grid.Row="0"
+                <ListView Grid.Row="0"
                          Grid.Column="1"
                          Grid.ColumnSpan="2"
-                         Margin="0,40,40,10" Background="{x:Null}" BorderBrush="#FF4A4A4A"></ListBox>
+                         Foreground="White"
+                         ItemsSource="{Binding MessageCollection}"
+                         Loaded="FrameworkElement_OnLoaded"
+                         Margin="0,40,40,10" Background="{x:Null}" BorderBrush="#FF4A4A4A">
+
+                </ListView>
 
                 <Label Grid.Row="1"
                        Grid.Column="0"

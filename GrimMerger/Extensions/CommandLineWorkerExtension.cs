@@ -46,12 +46,25 @@ namespace GrimMerger.Extensions
             worker.Dispose();
         }
 
+        internal static void RegisterMessage(this CommandLineWorker worker, CLMessage message)
+        {
+            worker.Messages.Enqueue(message);
+        }
+
+        internal static bool Wait(this CommandLineWorker worker)
+        {
+            return worker.ManualResetEvent.WaitOne();
+        }
+
         internal static async void ProcessMessageToCommandPrompt(this CommandLineWorker worker, CancellationToken token)
         {
+            const int MAX_REPEAT_TO_SLEEP = 1000;
+
             var awaitTime = TimeSpan.FromMilliseconds(100);
             var standardInput = worker.CommandPrompt.StandardInput;
             var messages = worker.Messages;
             var message = default(CLMessage);
+            var repeat = 0;
 
             while (token.IsCancellationRequested == false)
             {
@@ -59,6 +72,7 @@ namespace GrimMerger.Extensions
                 {
                     if (messages.TryDequeue(out message))
                     {
+                        repeat = 0;
                         var arguments = message.Arguments;
                         var type = message.Type;
 
@@ -71,25 +85,25 @@ namespace GrimMerger.Extensions
 
                                 //arguments[0] - From
                                 //arguments[1] - To
+                                var extractFiles = CommandLineMessages.Logic.ExtractFiles.Forge(arguments[0], arguments[1]);
 
-                                standardInput.ProcessMessage(CommandLineMessages.Logic.ExtractFiles.Forge(arguments[0], arguments[1]));
-
+                                standardInput.ProcessMessage(extractFiles);
                                 break;
                             case CLMessageType.ExtractDatabase:
 
                                 //arguments[0] - From
                                 //arguments[1] - To
+                                var extractDatabase = CommandLineMessages.Logic.ExtractDatabase.Forge(arguments[0], arguments[1]);
 
-                                standardInput.ProcessMessage(CommandLineMessages.Logic.ExtractDatabase.Forge(arguments[0], arguments[1]));
-
+                                standardInput.ProcessMessage(extractDatabase);
                                 break;
                             case CLMessageType.PackFiles:
 
                                 //arguments[0] - To
                                 //arguments[1] - ParentDir
+                                var packFilesMessage = CommandLineMessages.Logic.PackFiles.Forge(arguments[0], arguments[1]);
 
-                                standardInput.ProcessMessage(CommandLineMessages.Logic.PackFiles.Forge(arguments[0], arguments[1]));
-
+                                standardInput.ProcessMessage(packFilesMessage);
                                 break;
                             case CLMessageType.PackDatabase:
 
@@ -102,7 +116,7 @@ namespace GrimMerger.Extensions
                                                                                                              arguments[1],
                                                                                                              arguments[0]);
                                 standardInput.ProcessMessage(packDatabaseMessage);
-
+                                
                                 break;
                             default:
                                 worker.ProcessMessageToVisual(CommandLineMessages.CouldNotProcessMessageToCommandPrompt);
@@ -111,6 +125,15 @@ namespace GrimMerger.Extensions
                     }
 
                     await Task.Delay(awaitTime, token);
+
+                    if (repeat > MAX_REPEAT_TO_SLEEP)
+                    {
+                        worker.ManualResetEvent.Set();
+                    }
+                    else
+                    {
+                        repeat++;
+                    }
                 }
                 catch (Exception exception)
                 {
@@ -124,7 +147,7 @@ namespace GrimMerger.Extensions
             if (data == null)
                 return false;
 
-            worker.OnMessageObtained.Invoke(CLMessage.Build(data));
+            worker.ProcessMessageToVisual(CLMessage.Build(data));
 
             return true;
         }

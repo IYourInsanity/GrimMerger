@@ -30,9 +30,9 @@ namespace GrimMerger.Models
             return new CLMessage(value);
         }
 
-        internal static CLMessage Build(string value, CLMessageType type, params string[] args)
+        internal static CLMessage Build(CLMessageType type, params string[] args)
         {
-            return new CLMessage(value, type, args);
+            return new CLMessage(string.Empty, type, args);
         }
 
     }

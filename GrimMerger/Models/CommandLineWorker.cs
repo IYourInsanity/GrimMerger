@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Threading;
 using GrimMerger.Constants;
 using GrimMerger.Extensions;
 
@@ -12,12 +13,12 @@ namespace GrimMerger.Models
 
         #region Properties
 
+        internal ManualResetEvent ManualResetEvent { get; }
+
         internal ProcessStartInfo ProcessStartInfo { get; }
         internal Process CommandPrompt { get; }
         
         internal ConcurrentQueue<CLMessage> Messages { get; }
-
-        internal bool IsBusy { get; }
 
         #endregion
 
@@ -41,6 +42,8 @@ namespace GrimMerger.Models
                 StartInfo = ProcessStartInfo
             };
 
+            Messages = new ConcurrentQueue<CLMessage>();
+            ManualResetEvent = new ManualResetEvent(false);
         }
 
         internal void OutputDataReceived(object sender, DataReceivedEventArgs eventArgs)
@@ -55,13 +58,17 @@ namespace GrimMerger.Models
 
         public void Dispose()
         {
-            CommandPrompt.StandardInput.Close();
-            CommandPrompt.StandardInput.Dispose();
+            //CommandPrompt.StandardInput.Close();
+            //CommandPrompt.StandardInput.Dispose();
             CommandPrompt.WaitForExit();
             CommandPrompt.Dispose();
         }
 
-        internal MessageObtained OnMessageObtained;
+        internal void ProcessMessageToVisual(CLMessage message)
+        {
+            OnMessageObtain?.Invoke(message);
+        }
 
+        internal event MessageObtain OnMessageObtain;
     }
 }

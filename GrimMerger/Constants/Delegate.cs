@@ -2,5 +2,5 @@
 
 namespace GrimMerger.Constants
 {
-    internal delegate void MessageObtained(CLMessage message);
+    internal delegate void MessageObtain(CLMessage message);
 }

@@ -5,6 +5,7 @@ using GrimMerger.BusinessModels;
 using GrimMerger.Interfaces;
 using GrimMerger.Models;
 using RubyUIExtension.Common;
+using RubyUIExtension.Helpers;
 using RubyUIExtension.Interfaces.Windows;
 using RubyUIExtension.ViewModels;
 
@@ -109,7 +110,7 @@ namespace GrimMerger.ViewModels
 
         public void MergeMods()
         {
-
+            _mainBM.MergeMods(AddMessage);
         }
 
         public bool CanMergeMods()
@@ -118,6 +119,14 @@ namespace GrimMerger.ViewModels
         }
 
         #endregion
+
+        private void AddMessage(CLMessage message)
+        {
+            UIHelper.UpdateUI(() =>
+            {
+                MessageCollection.Add(message.Value);
+            });
+        }
 
     }
 }
