@@ -9,10 +9,8 @@ namespace GrimMerger.BusinessModels
 {
     internal class MainBusinessModel
     {
-        private const string EXECUTABLE_EXTENSION = "exe";
+        private const string EXECUTABLE_EXTENSION = ".exe";
         private const string ARCHIVE_TOOL_FILENAME = "ArchiveTool";
-
-
 
         #region Fields
 
@@ -37,9 +35,9 @@ namespace GrimMerger.BusinessModels
                 var ext = Path.GetExtension(fileName);
 
                 return ext.Equals(EXECUTABLE_EXTENSION, StringComparison.OrdinalIgnoreCase);
-            }).Select(_ => _);
+            }).Select(Path.GetFileNameWithoutExtension).ToList();
 
-            return executableFiles.ToHashSet().SetEquals(_fileNameHashSet);
+            return _fileNameHashSet.Any(_ => executableFiles.Any(__ => __.Equals(_)));
         }
 
         #endregion

@@ -37,7 +37,7 @@ namespace GrimMerger.ViewModels
 
         public MainViewModel() : base()
         {
-            _mainBusinessModel = new MainBusinessModel();
+            _mainBM = new MainBusinessModel();
         }
 
         #endregion

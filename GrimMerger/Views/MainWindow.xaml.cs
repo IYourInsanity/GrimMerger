@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using GrimMerger.ViewModels;
+﻿using GrimMerger.ViewModels;
 using GrimMerger.Views.Base;
 
 namespace GrimMerger.Views
@@ -11,6 +10,5 @@ namespace GrimMerger.Views
             InitializeComponent();
             DataContext = new MainViewModel();
         }
-
     }
 }

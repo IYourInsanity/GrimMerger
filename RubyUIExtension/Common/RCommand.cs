@@ -57,30 +57,20 @@ namespace RubyUIExtension.Common
             return false;
         }
 
-        public void Execute()
+        public void Execute(object? parameter)
         {
             try
             {
                 ExecuteBegin?.Invoke();
-                targetExecuteMethod();
-            }
-            catch (Exception ex)
-            {
-#if DEBUG
-                Console.WriteLine($"Trace exception : {ex.Message}");
-#endif
-            }
-            finally
-            {
-                ExecuteEnd?.Invoke();
-            }
-        }
-        public void Execute(object parameter)
-        {
-            try
-            {
-                ExecuteBegin?.Invoke();
-                targetExecuteMethodWithParam(parameter);
+
+                if (parameter == null)
+                {
+                    targetExecuteMethod();
+                }
+                else
+                {
+                    targetExecuteMethodWithParam(parameter);
+                }
             }
             catch (Exception ex)
             {
