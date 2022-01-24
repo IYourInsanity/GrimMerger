@@ -10,12 +10,11 @@
                 WindowStartupLocation="CenterScreen" 
                 ResizeMode="NoResize" 
                 WindowStyle="None" 
+                Width="1000"
+                Height="600"
                 AllowsTransparency="True"
                 Icon="/Resources/Images/GrimMergeIcon.ico">
-    <Border CornerRadius="0,0,96,0"
-            Width="1000"
-            Height="600"
-            Background="White">
+    <Border Background="#FF2E2E2E">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
@@ -24,7 +23,7 @@
 
             <Grid Grid.Row="0" 
                   MouseLeftButtonDown="Grid_MouseLeftButtonDown" 
-                  Background="#FF134348">
+                  Background="#FF1E1E1E">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48"/>
@@ -81,17 +80,18 @@
                        Content="Mods for merge"
                        Margin="10"
                        VerticalAlignment="Top"
-                       Foreground="Black"
+                       Foreground="White"
                        FontSize="16"/>
 
                 <ListBox Grid.Row="0"
                          Grid.Column="0"
                          ItemsSource="{Binding ModCollection}"
-                         Margin="10, 40,10,10">
+                         Margin="10, 40,10,10" BorderBrush="#FF4A4A4A" Background="{x:Null}">
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <CheckBox IsChecked="{Binding Path=IsActive}"
+                            <CheckBox Foreground="White"
+                                      IsChecked="{Binding Path=IsActive}"
                                       Content="{Binding Path=Name}"
                                       ToolTip="{Binding Path=Path}"/>
                         </DataTemplate>
@@ -103,12 +103,12 @@
                 <ListBox Grid.Row="0"
                          Grid.Column="1"
                          Grid.ColumnSpan="2"
-                         Margin="0,40,60,10"></ListBox>
+                         Margin="0,40,40,10" Background="{x:Null}" BorderBrush="#FF4A4A4A"></ListBox>
 
                 <Label Grid.Row="1"
                        Grid.Column="0"
                        Content="Game folder:"
-                       Foreground="Black"
+                       Foreground="White"
                        Margin="10,4,0,0"
                        FontSize="16"/>
 
@@ -119,7 +119,7 @@
                             Height="24"
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
-                    
+
                     <TextBox Width="AUTO"
                              MinWidth="360"
                              MaxWidth="600"
@@ -129,21 +129,29 @@
                              Margin="6,0,20,0"/>
 
                     <Button Width="24"
-                            Command="{Binding Path=OpenFolderDialogCommand}"/>
+                            Style="{StaticResource ROUND_BUTTON_MERGE_STYLE}"
+                            Command="{Binding Path=OpenFolderDialogCommand}">
+                        <Image Source="/Resources/Images/Settings.png"
+                               Width="14" 
+                               Height="14"/>
+                    </Button>
 
                 </StackPanel>
 
-                <Button Width="128"
-                        Height="64"
+                <Button Width="96"
+                        Height="32"
                         Grid.Row="1"
                         Grid.Column="2"
                         Content="Merge"
+                        Background="#FF252525"
                         BorderBrush="{x:Null}"
+                        HorizontalAlignment="Left"
                         Style="{StaticResource ROUND_BUTTON_MERGE_STYLE}"
-                        Command="{Binding Path=MergeModsCommand}">
+                        Command="{Binding Path=MergeModsCommand}" 
+                        Foreground="White">
                 </Button>
 
-                
+
             </Grid>
 
         </Grid>

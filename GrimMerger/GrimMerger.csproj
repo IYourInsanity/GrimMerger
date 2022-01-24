@@ -13,10 +13,18 @@
 
   <ItemGroup>
     <None Remove="app.manifest" />
+    <None Remove="Resources\Images\Cancel.png" />
+    <None Remove="Resources\Images\Settings.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resources\Images\Cancel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Images\GrimMergeIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Settings.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

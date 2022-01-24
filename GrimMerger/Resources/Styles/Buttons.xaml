@@ -10,7 +10,7 @@
                         <Grid x:Name="_grid"
                               Height="{TemplateBinding Height}" 
                               Width="{TemplateBinding Width}"
-                              Background="#FF134348">
+                              Background="#FF1E1E1E">
 
                             <Label Content="{TemplateBinding Content}"
                                    HorizontalAlignment="Center"
@@ -24,7 +24,7 @@
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" Value="#FF2A2A2C" TargetName="_grid"/>
+                                <Setter Property="Background" Value="#FF3F3F46" TargetName="_grid"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
 
@@ -38,21 +38,37 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="{TemplateBinding Border.CornerRadius}">
-                        <ContentPresenter x:Name="contentPresenter" 
-                                          ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                          Content="{TemplateBinding Content}" 
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}" 
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    <Border x:Name="BORDER_BASE"
+                            Height="{TemplateBinding Height}" 
+                            Width="{TemplateBinding Width}"
+                            CornerRadius="{TemplateBinding Border.CornerRadius}"
+                            Background="#FF2A2A2C">
+                        <Grid>
+
+                            <Label Content="{TemplateBinding Content}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="{TemplateBinding FontSize}" 
+                                   FontFamily="Segoe UI Semibold"
+                                   IsHitTestVisible="False"
+                                   Foreground="{TemplateBinding Foreground}"/>
+
+                        </Grid>
                     </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="#FF3F3F46" TargetName="BORDER_BASE"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
     <Style x:Key="ROUND_BUTTON_MERGE_STYLE" TargetType="Button" BasedOn="{StaticResource ROUND_BUTTON_BASE_STYLE}">
-        <Setter Property="Border.CornerRadius" Value="0,0,96,0"/>
+        <Setter Property="Border.CornerRadius" Value="0"/>
     </Style>
 
 </ResourceDictionary>
