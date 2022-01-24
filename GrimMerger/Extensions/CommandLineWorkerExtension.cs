@@ -6,9 +6,9 @@ using GrimMerger.Constants;
 using GrimMerger.Enums;
 using GrimMerger.Models;
 
-namespace GrimMerger.Helpers
+namespace GrimMerger.Extensions
 {
-    internal static class CommandLineWorkerHelper
+    internal static class CommandLineWorkerExtension
     {
         internal static async Task<bool> StartAsync(this CommandLineWorker worker, string pathToDir, CancellationToken token)
         {

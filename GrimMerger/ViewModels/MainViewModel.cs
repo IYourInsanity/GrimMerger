@@ -46,7 +46,7 @@ namespace GrimMerger.ViewModels
 
         public override void UpdateAllValue()
         {
-            
+            UpdateValue(nameof(PathToGameFolder));
         }
 
         #endregion

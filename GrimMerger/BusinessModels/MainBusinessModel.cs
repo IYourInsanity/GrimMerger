@@ -9,6 +9,5 @@ namespace GrimMerger.BusinessModels
     internal class MainBusinessModel
     {
         internal string pathToGameFolder;
-
     }
 }

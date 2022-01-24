@@ -1,6 +1,6 @@
-﻿namespace GrimMerger.Helpers
+﻿namespace GrimMerger.Extensions
 {
-    internal static class StringHelper
+    internal static class StringExtension
     {
         internal static string Forge(this string blank, params string[] args)
         {

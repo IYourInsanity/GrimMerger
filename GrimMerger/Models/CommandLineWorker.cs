@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using GrimMerger.Constants;
-using GrimMerger.Helpers;
+using GrimMerger.Extensions;
 
 namespace GrimMerger.Models
 {
