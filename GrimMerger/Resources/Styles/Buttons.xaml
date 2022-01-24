@@ -34,4 +34,25 @@
         </Style.Setters>
     </Style>
 
+    <Style x:Key="ROUND_BUTTON_BASE_STYLE" TargetType="Button" BasedOn="{x:Null}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="{TemplateBinding Border.CornerRadius}">
+                        <ContentPresenter x:Name="contentPresenter" 
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                          Content="{TemplateBinding Content}" 
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ROUND_BUTTON_MERGE_STYLE" TargetType="Button" BasedOn="{StaticResource ROUND_BUTTON_BASE_STYLE}">
+        <Setter Property="Border.CornerRadius" Value="0,0,96,0"/>
+    </Style>
+
 </ResourceDictionary>

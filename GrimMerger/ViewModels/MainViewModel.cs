@@ -2,6 +2,7 @@
 using GrimMerger.BusinessModels;
 using GrimMerger.Interfaces;
 using RubyUIExtension.Common;
+using RubyUIExtension.Interfaces.Windows;
 using RubyUIExtension.ViewModels;
 
 using WinForm = System.Windows.Forms;
@@ -15,10 +16,16 @@ namespace GrimMerger.ViewModels
 
         #region Properties
 
-        public string PathToGameFolder
+        public string PathToFolder
         {
-            get => _mainBM.pathToGameFolder;
-            set => SetValue(ref _mainBM.pathToGameFolder, value, nameof(PathToGameFolder));
+            get => _mainBM.pathToFolder;
+            set => SetValue(ref _mainBM.pathToFolder, value, nameof(PathToFolder));
+        }
+
+        public string PathToExe
+        {
+            get => _mainBM.pathToExe;
+            set => SetValue(ref _mainBM.pathToExe, value, nameof(PathToExe));
         }
 
         #endregion
@@ -37,7 +44,7 @@ namespace GrimMerger.ViewModels
 
         public MainViewModel() : base()
         {
-            _mainBM = new MainBusinessModel();
+            _mainBM = new MainBusinessModel(UpdateAllValue);
         }
 
         #endregion
@@ -46,13 +53,18 @@ namespace GrimMerger.ViewModels
 
         public override void UpdateAllValue()
         {
-            UpdateValue(nameof(PathToGameFolder));
+            UpdateValue(nameof(PathToFolder));
         }
 
         #endregion
 
         #region Overrides of RWindowViewModel
 
+        public override void Initialize(IRWindow? window)
+        {
+            base.Initialize(window);
+            _mainBM.Initialize();
+        }
 
         public override bool Exit()
         {
@@ -67,7 +79,7 @@ namespace GrimMerger.ViewModels
         {
             var openFolderDialog = new WinForm.FolderBrowserDialog()
             {
-                InitialDirectory = Environment.CurrentDirectory
+                InitialDirectory = PathToFolder.Equals(string.Empty) ? Environment.CurrentDirectory : PathToFolder,
             };
 
             if (openFolderDialog.ShowDialog() != WinForm.DialogResult.OK) 
@@ -77,7 +89,8 @@ namespace GrimMerger.ViewModels
 
             if (_mainBM.VerifiedPath(selectedPath))
             {
-                PathToGameFolder = selectedPath;
+                PathToFolder = selectedPath;
+                PathToExe = _mainBM.SearchExeFile(selectedPath);
             }
             else
             {
