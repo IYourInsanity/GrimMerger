@@ -10,15 +10,15 @@ namespace GrimMerger.ViewModels
 {
     public sealed class MainViewModel : RWindowViewModel<IMainViewModel>, IMainViewModel
     {
-        private MainBusinessModel _mainBusinessModel;
+        private MainBusinessModel _mainBM;
 
 
         #region Properties
 
         public string PathToGameFolder
         {
-            get => _mainBusinessModel.pathToGameFolder;
-            set => SetValue(ref _mainBusinessModel.pathToGameFolder, value, nameof(PathToGameFolder));
+            get => _mainBM.pathToGameFolder;
+            set => SetValue(ref _mainBM.pathToGameFolder, value, nameof(PathToGameFolder));
         }
 
         #endregion
@@ -70,9 +70,18 @@ namespace GrimMerger.ViewModels
                 InitialDirectory = Environment.CurrentDirectory
             };
 
-            if (openFolderDialog.ShowDialog() == WinForm.DialogResult.OK)
+            if (openFolderDialog.ShowDialog() != WinForm.DialogResult.OK) 
+                return;
+
+            var selectedPath = openFolderDialog.SelectedPath;
+
+            if (_mainBM.VerifiedPath(selectedPath))
             {
-                PathToGameFolder = openFolderDialog.SelectedPath;
+                PathToGameFolder = selectedPath;
+            }
+            else
+            {
+                //IMPLEMENT MESSAGE BOX
             }
         }
 
