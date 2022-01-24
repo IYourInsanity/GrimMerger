@@ -86,7 +86,16 @@
 
                 <ListBox Grid.Row="0"
                          Grid.Column="0"
+                         ItemsSource="{Binding ModCollection}"
                          Margin="10, 40,10,10">
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding Path=IsActive}"
+                                      Content="{Binding Path=Name}"
+                                      ToolTip="{Binding Path=Path}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
 
                 </ListBox>
 
@@ -94,28 +103,32 @@
                 <ListBox Grid.Row="0"
                          Grid.Column="1"
                          Grid.ColumnSpan="2"
-                         Margin="20,40,60,10"></ListBox>
+                         Margin="0,40,60,10"></ListBox>
+
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Content="Game folder:"
+                       Foreground="Black"
+                       Margin="10,4,0,0"
+                       FontSize="16"/>
 
                 <StackPanel Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
                             Margin="10"
+                            Height="24"
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
-
-                    <Label Content="Path to game: "
-                           VerticalAlignment="Top"
-                           Foreground="Black"
-                           FontSize="16"/>
-
+                    
                     <TextBox Width="AUTO"
                              MinWidth="360"
                              MaxWidth="600"
+                             IsEnabled="False"
                              VerticalContentAlignment="Center"
                              Text="{Binding Path=PathToFolder}"
-                             Margin="20,0,20,0"/>
+                             Margin="6,0,20,0"/>
 
-                    <Button Width="32"
+                    <Button Width="24"
                             Command="{Binding Path=OpenFolderDialogCommand}"/>
 
                 </StackPanel>

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using GrimMerger.Models;
+using RubyUIExtension.Helpers;
 
 namespace GrimMerger.BusinessModels
 {
@@ -12,6 +15,8 @@ namespace GrimMerger.BusinessModels
         private const string ARCHIVE_TOOL_FILENAME = "ArchiveTool";
         private const string GRIM_DAWN_FILENAME = "Grim Dawn";
 
+        private const string PATH_MOD_PART = "mods";
+
         #region Fields
 
         private Action updateAllValueAction;
@@ -20,6 +25,10 @@ namespace GrimMerger.BusinessModels
 
         internal string pathToFolder;
         internal string pathToExe;
+        internal string pathToModFolder;
+
+        internal ObservableCollection<string> messageCollection;
+        internal ObservableCollection<Mod> modCollection;
 
         #endregion
 
@@ -32,6 +41,9 @@ namespace GrimMerger.BusinessModels
             {
                 ARCHIVE_TOOL_FILENAME
             };
+
+            messageCollection = new ObservableCollection<string>();
+            modCollection = new ObservableCollection<Mod>();
         }
 
         #endregion
@@ -51,10 +63,9 @@ namespace GrimMerger.BusinessModels
                     Path.Combine(root, "Program Files (x86)")
                 };
 
-                SearchFolder(foldersToSearch, out pathToFolder, out pathToExe);
+                SearchFolder(foldersToSearch);
+                PrepareTempModFolderAndMods();
 
-            }).ContinueWith(_ =>
-            {
                 updateAllValueAction();
             });
         }
@@ -76,7 +87,7 @@ namespace GrimMerger.BusinessModels
 
         #endregion
 
-        internal bool SearchFolder(string[] foldersToSearch, out string pathToFolder, out string pathToExe)
+        internal bool SearchFolder(string[] foldersToSearch)
         {
             var result = false;
 
@@ -93,12 +104,13 @@ namespace GrimMerger.BusinessModels
                     {
                         pathToExe = fileName;
                         pathToFolder = folderToSearch;
+                        pathToModFolder = Path.Combine(folderToSearch, PATH_MOD_PART);
 
                         result = true;
                     }
                     else
                     {
-                        result = SearchFolder(Directory.GetDirectories(folderToSearch), out pathToFolder, out pathToExe);
+                        result = SearchFolder(Directory.GetDirectories(folderToSearch));
                     }
 
                     if(result)
@@ -122,6 +134,30 @@ namespace GrimMerger.BusinessModels
 
             return fileName ?? string.Empty;
 
+        }
+
+        private void PrepareTempModFolderAndMods()
+        {
+            var tempDirectory = Path.Combine(Environment.CurrentDirectory, "Temp");
+
+            if (Directory.Exists(tempDirectory))
+            {
+                Directory.Delete(tempDirectory, true);
+            }
+
+            Directory.CreateDirectory(tempDirectory);
+            Directory.CreateDirectory(Path.Combine(tempDirectory, "source"));
+            Directory.CreateDirectory(Path.Combine(tempDirectory, "database", "templates"));
+
+            var directoryInfo = new DirectoryInfo(pathToModFolder);
+
+            foreach (var modInfo in directoryInfo.GetDirectories())
+            {
+                UIHelper.UpdateUI(() =>
+                {
+                    modCollection.Add(new Mod(modInfo.FullName, modInfo.Name, true));
+                });
+            }
         }
 
     }

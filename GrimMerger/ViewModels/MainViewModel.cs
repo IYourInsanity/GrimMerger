@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using GrimMerger.BusinessModels;
 using GrimMerger.Interfaces;
+using GrimMerger.Models;
 using RubyUIExtension.Common;
 using RubyUIExtension.Interfaces.Windows;
 using RubyUIExtension.ViewModels;
@@ -28,6 +31,9 @@ namespace GrimMerger.ViewModels
             set => SetValue(ref _mainBM.pathToExe, value, nameof(PathToExe));
         }
 
+        public ObservableCollection<string> MessageCollection => _mainBM.messageCollection;
+        public ObservableCollection<Mod> ModCollection => _mainBM.modCollection;
+
         #endregion
 
         #region Commands
@@ -54,6 +60,9 @@ namespace GrimMerger.ViewModels
         public override void UpdateAllValue()
         {
             UpdateValue(nameof(PathToFolder));
+
+            UpdateValue(nameof(MessageCollection));
+            UpdateValue(nameof(ModCollection));
         }
 
         #endregion
