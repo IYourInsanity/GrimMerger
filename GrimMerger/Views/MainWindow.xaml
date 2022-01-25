@@ -8,12 +8,11 @@
                 Title="GrimMerger" 
                 Background="Transparent"
                 WindowStartupLocation="CenterScreen" 
-                ResizeMode="NoResize" 
+                ResizeMode="NoResize"
                 WindowStyle="None" 
                 Width="1000"
                 Height="600"
-                AllowsTransparency="True"
-                Icon="/Resources/Images/GrimMergeIcon.ico">
+                AllowsTransparency="True">
     <Border Background="#FF2E2E2E">
         <Grid>
             <Grid.RowDefinitions>
@@ -35,8 +34,8 @@
                 <Image Grid.Column="0"
                        Width="28"
                        Height="28"
-                       ToolTip="Grim Dawn Mod Merger"
-                       Source="/Resources/Images/Icon.png"/>
+                       ToolTip="Grim Dawn Mod Merge Manager"
+                       Source="/Resources/Images/Icon.ico"/>
 
                 <Label Grid.Column="1"
                        Content="GRIM DAWN MOD MERGE MANAGER"

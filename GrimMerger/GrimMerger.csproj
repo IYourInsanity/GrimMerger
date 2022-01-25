@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>Resources\Images\GrimMergeIcon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Images\Icon.ico</ApplicationIcon>
     <StartupObject>GrimMerger.App</StartupObject>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -14,11 +14,26 @@
   <ItemGroup>
     <None Remove="app.manifest" />
     <None Remove="Resources\Images\Cancel.png" />
+    <None Remove="Resources\Images\Minimize.png" />
+    <None Remove="Resources\Images\Plus.png" />
+    <None Remove="Resources\Images\Resize.png" />
     <None Remove="Resources\Images\Settings.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Resources\Images\Cancel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Minimize.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Plus.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Resize.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Images\Settings.png">
@@ -36,15 +51,6 @@
 
   <ItemGroup>
     <None Update="Resources\Images\Icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Images\Minimize.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Images\Plus.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Images\Resize.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
