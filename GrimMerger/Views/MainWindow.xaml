@@ -5,7 +5,7 @@
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:ui="clr-namespace:GrimMerger.Views.Base"
                 mc:Ignorable="d"
-                Title="GrimMerge" 
+                Title="GrimMerger" 
                 Background="Transparent"
                 WindowStartupLocation="CenterScreen" 
                 ResizeMode="NoResize" 
@@ -29,13 +29,14 @@
                     <ColumnDefinition Width="48"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="64"/>
                 </Grid.ColumnDefinitions>
 
                 <Image Grid.Column="0"
                        Width="28"
                        Height="28"
-                       Source="/Resources/Images/GrimMergeIcon.ico"/>
+                       ToolTip="Grim Dawn Mod Merger"
+                       Source="/Resources/Images/Icon.png"/>
 
                 <Label Grid.Column="1"
                        Content="GRIM DAWN MOD MERGE MANAGER"
@@ -48,6 +49,16 @@
                             Orientation="Horizontal"
                             RenderOptions.EdgeMode="Aliased"
                             RenderOptions.BitmapScalingMode="Fant">
+
+                    <Button Width="32"
+                            Height="32"
+                            Style="{StaticResource TOP_MENU_BUTTON_STYLE}"
+                            Click="Minimize_Button_Click">
+                        <Image Source="/Resources/Images/Minimize.png"
+                               Width="12" 
+                               Height="12">
+                        </Image>
+                    </Button>
 
                     <Button Width="32"
                             Height="32"
